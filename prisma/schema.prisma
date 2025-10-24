@@ -1,0 +1,89 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  level     Int
+  category  String
+  icon      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TimelineEvent {
+  id          Int      @id @default(autoincrement())
+  title       String
+  date        String
+  description String
+}
+
+model Certificate {
+  id          Int      @id @default(autoincrement())
+  title       String
+  platform    String
+  link        String?
+  imageUrl    String
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  mainLang    String
+  topics      String[]
+  techs       String[]
+  imageUrl    String
+  liveUrl     String?
+  repoUrl     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model VisitorLog {
+  id        Int      @id @default(autoincrement())
+  ip        String
+  userAgent String
+  page      String
+  createdAt DateTime @default(now())
+}
+
+model About {
+  id        Int      @id @default(autoincrement())
+  name      String   @default("")
+  bio       String   @default("")
+  avatarUrl String   @default("")
+  github    String?
+  linkedin  String?
+  instagram String?
+  cvUrl     String?
+  updatedAt DateTime @updatedAt
+}
