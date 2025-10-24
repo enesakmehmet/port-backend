@@ -24,11 +24,14 @@ const vercelRegex = /\.vercel\.app$/;
 app.use(
   cors({
     origin: (origin, callback) => {
+      console.log("📍 CORS isteği geldi:", origin);
+      
       if (
         !origin ||
         allowedOrigins.includes(origin) ||
         vercelRegex.test(origin)
       ) {
+        console.log("✅ CORS kabul edildi:", origin);
         callback(null, true);
       } else {
         console.warn("🚫 CORS reddedildi:", origin);
@@ -40,6 +43,8 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
     exposedHeaders: ["Content-Length", "X-Request-Id"],
     maxAge: 86400, // 24 saat
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   })
 );
 
