@@ -20,6 +20,7 @@ const allowedOrigins = [
 ];
 const vercelRegex = /\.vercel\.app$/;
 
+// ✅ CORS - En başta olmalı
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -37,13 +38,16 @@ app.use(
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["Content-Length", "X-Request-Id"],
+    maxAge: 86400, // 24 saat
   })
 );
 
-// ✅ Helmet güvenlik ayarları
+// ✅ Helmet güvenlik ayarları - CORS'tan sonra
 app.use(
   helmet({
-    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginResourcePolicy: false,
+    crossOriginOpenerPolicy: false,
     crossOriginEmbedderPolicy: false,
   })
 );
